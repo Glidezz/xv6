@@ -124,7 +124,7 @@ allocproc(void)
 found:
   p->pid = allocpid();
   p->state = USED;
-
+  p->mark = 0;
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
     freeproc(p);
@@ -310,8 +310,10 @@ fork(void)
 
   safestrcpy(np->name, p->name, sizeof(p->name));
 
-  pid = np->pid;
+  np->mark = p->mark;  // 拷贝trace标识位
 
+  pid = np->pid;
+  
   release(&np->lock);
 
   acquire(&wait_lock);
@@ -685,4 +687,17 @@ procdump(void)
     printf("%d %s %s", p->pid, state, p->name);
     printf("\n");
   }
+}
+
+
+uint64 kproc(void) {
+    uint64 ans = 0;
+    struct proc *p;
+    for (p = proc; p < &proc[NPROC]; p++) {
+        acquire(&p->lock);
+        if (p->state != UNUSED)
+            ans++;
+        release(&p->lock);
+    }
+    return ans;
 }

@@ -62,3 +62,6 @@
 //   TRAPFRAME (p->trapframe, used by the trampoline)
 //   TRAMPOLINE (the same page as in the kernel)
 #define TRAPFRAME (TRAMPOLINE - PGSIZE)
+
+// add in cow 
+#define NPAGES (PHYSTOP/PGSIZE)

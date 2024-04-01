@@ -473,7 +473,8 @@ copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
 
 
 int 
-is_cow_falut(pagetable_t pagetable,uint64 va){
+is_cow_falut(pagetable_t pagetable,uint64 va)
+{
   if(va >= MAXVA){
     return 0;
   }
@@ -491,7 +492,8 @@ is_cow_falut(pagetable_t pagetable,uint64 va){
 }
 
 int
-cow_alloc(pagetable_t pagetable,uint64 va){
+cow_alloc(pagetable_t pagetable,uint64 va)
+{
   va = PGROUNDDOWN(va);
   pte_t *pte = walk(pagetable, va, 0);
   uint64 pa = PTE2PA(*pte);

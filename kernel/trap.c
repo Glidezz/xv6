@@ -70,11 +70,11 @@ usertrap(void)
   } else if (r_scause() == 13 || r_scause() == 15) {
     uint64 va = r_stval();
     if (is_cow_falut(p->pagetable, va)) {
-        if (cow_alloc(p->pagetable, va) < 0) {
-            p->killed = 1;
-        }
-      } else
-          p->killed = 1;
+      if (cow_alloc(p->pagetable, va) < 0) {
+        p->killed = 1;
+      }
+    } else
+      p->killed = 1;
   } else {
       printf("usertrap(): unexpected scause %p pid=%d\n", r_scause(), p->pid);
       printf("            sepc=%p stval=%p\n", r_sepc(), r_stval());

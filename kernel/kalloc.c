@@ -41,8 +41,8 @@ freerange(void *pa_start, void *pa_end)
   char *p;
   p = (char*)PGROUNDUP((uint64)pa_start);
   for(; p + PGSIZE <= (char*)pa_end; p += PGSIZE){
-      kmem.count[((uint64)p - KERNBASE) / PGSIZE] = 1;  // 和kfree函数搭配使用就会使得初始值初始化为0
-      kfree(p);
+    kmem.count[((uint64)p - KERNBASE) / PGSIZE] = 1;  // 和kfree函数搭配使用就会使得初始值初始化为0
+    kfree(p);
   }
 }
 
@@ -61,14 +61,14 @@ kfree(void *pa)
   desc((uint64)pa);
   if (kmem.count[((uint64)pa - KERNBASE) / PGSIZE] == 0) {
       // Fill with junk to catch dangling refs.
-      memset(pa, 1, PGSIZE);
+    memset(pa, 1, PGSIZE);
 
-      r = (struct run *)pa;
+    r = (struct run *)pa;
 
-      acquire(&kmem.lock);
-      r->next = kmem.freelist;
-      kmem.freelist = r;
-      release(&kmem.lock);
+    acquire(&kmem.lock);
+    r->next = kmem.freelist;
+    kmem.freelist = r;
+    release(&kmem.lock);
   }
 }
 

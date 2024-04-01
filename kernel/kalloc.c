@@ -41,7 +41,7 @@ freerange(void *pa_start, void *pa_end)
   char *p;
   p = (char*)PGROUNDUP((uint64)pa_start);
   for(; p + PGSIZE <= (char*)pa_end; p += PGSIZE){
-      kmem.count[(uint64)p / PGSIZE] = 1;  // 和kfree函数搭配使用就会使得初始值初始化为0
+      kmem.count[((uint64)p - KERNBASE) / PGSIZE] = 1;  // 和kfree函数搭配使用就会使得初始值初始化为0
       kfree(p);
   }
 }
@@ -59,16 +59,16 @@ kfree(void *pa)
     panic("kfree");
 
   desc((uint64)pa);
-  if (kmem.count[(uint64)pa / PGSIZE] == 0) {
-    // Fill with junk to catch dangling refs.
-    memset(pa, 1, PGSIZE);
+  if (kmem.count[((uint64)pa - KERNBASE) / PGSIZE] == 0) {
+      // Fill with junk to catch dangling refs.
+      memset(pa, 1, PGSIZE);
 
-    r = (struct run *)pa;
+      r = (struct run *)pa;
 
-    acquire(&kmem.lock);
-    r->next = kmem.freelist;
-    kmem.freelist = r;
-    release(&kmem.lock);
+      acquire(&kmem.lock);
+      r->next = kmem.freelist;
+      kmem.freelist = r;
+      release(&kmem.lock);
   }
 }
 
@@ -85,10 +85,10 @@ kalloc(void)
     kmem.freelist = r->next;
   release(&kmem.lock);
 
-  if(r)
+  if(r){
     memset((char*)r, 5, PGSIZE); // fill with junk
-
-  incr((uint64)r);
+    incr((uint64)r);
+  }
   return (void *)r;
 }
 
@@ -96,7 +96,7 @@ void
 incr(uint64 pa)
 {
   acquire(&kmem.lock);
-  kmem.count[(uint64)pa / PGSIZE] += 1;
+  kmem.count[(pa - KERNBASE) / PGSIZE] += 1;
   release(&kmem.lock);
 }
 
@@ -104,6 +104,6 @@ void
 desc(uint64 pa)
 {
   acquire(&kmem.lock);
-  kmem.count[(uint64)pa / PGSIZE] -= 1;
+  kmem.count[(pa - KERNBASE) / PGSIZE] -= 1;
   release(&kmem.lock);
 }

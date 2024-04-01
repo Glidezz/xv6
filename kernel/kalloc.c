@@ -26,6 +26,9 @@ struct {
 /*
   这里使用两把锁可能会有资源竞争，最后导致死锁
   索性只使用一把锁管理资源，降低并发度，从而减少资源竞争
+  // 前几次测试会偶尔出现bug从而无法通过usertests。但是在后来的测试中没有出现bug
+  // maybe the bug is due to my environment（2核2g）😭
+  // qemu 的默认参数是CPUS=3 
 */
 
 void
@@ -60,7 +63,7 @@ kfree(void *pa)
 
   desc((uint64)pa);
   if (kmem.count[((uint64)pa - KERNBASE) / PGSIZE] == 0) {
-      // Fill with junk to catch dangling refs.
+    // Fill with junk to catch dangling refs.
     memset(pa, 1, PGSIZE);
 
     r = (struct run *)pa;

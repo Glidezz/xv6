@@ -10,7 +10,7 @@
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
-            "miDebuggerServerAddress": "127.0.0.1:25000",
+            "miDebuggerServerAddress": "127.0.0.1:26000",
             //这里的端口号需查看.gdbinit 中的端口号
             
             "miDebuggerPath": "/usr/bin/gdb-multiarch",

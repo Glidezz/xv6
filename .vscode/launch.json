@@ -10,10 +10,10 @@
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
-            "miDebuggerServerAddress": "127.0.0.1:25000",
+            "miDebuggerServerAddress": "127.0.0.1:25501",
             //这里的端口号需查看.gdbinit 中的端口号
             
-            "miDebuggerPath": "/usr/bin/gdb-multiarch",
+            "miDebuggerPath": "/opt/homebrew/bin/riscv64-elf-gdb",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",

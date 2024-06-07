@@ -8,6 +8,14 @@
 
 课程翻译：[https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081](https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081)
 
+使用vscode调试xv6可参照[优雅的调试—在vscode上完美调试xv6（完结）](https://sanbuphy.github.io/p/%E4%BC%98%E9%9B%85%E7%9A%84%E8%B0%83%E8%AF%95%E5%9C%A8vscode%E4%B8%8A%E5%AE%8C%E7%BE%8E%E8%B0%83%E8%AF%95xv6%E5%AE%8C%E7%BB%93/)
+
+注意执行一下命令
+```bash
+echo add-auto-load-safe-path {PATH}/.gdbinit > ~/.gdbinit 
+```
+
+
 记录答案
 * [lab1-util](./ans/util.md)
 * [lab2-syscall](./ans/syscall.md)

@@ -152,7 +152,7 @@ syscall(void)
  } 
 ```
 
-最后实现copyout将得到的结果从内核态拷贝到用户态。
+最后利用copyout将得到的结果从内核态拷贝到用户态。
 
 ```c
 //sysproc.c

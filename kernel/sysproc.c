@@ -81,8 +81,6 @@ sys_pgaccess(void)
   argaddr(0, &addr);
   argint(1, &n);
   argint(2, &bitmask);
-  if (n > 32 || n < 0)
-    return -1;
     
   struct proc* p = myproc();
   int res = 0;

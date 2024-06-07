@@ -8,6 +8,11 @@
 
 课程翻译：[https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081](https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081)
 
+记录答案
+*  [lab1-util](./ans/util.md)
+* [lab2-syscall](./ans/syscall.md)
+
+
 此分支记录了我在学习xv6中的一些心得体会，以Q&A的方式记录一下。
 * [一周目](QA/一周目.md)
 * [二周目](QA/二周目.md)

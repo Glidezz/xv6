@@ -186,6 +186,8 @@ uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
 ```
 
 在出现缺页异常时，查看标记如下。当出现有关页表的异常时，我们要判断是否因为COW导致的异常，如果是COW导致的异常，需要我们重新分配一个页，同时清空COW标记位，恢复PTE_W位。
+
+
 ![](../QA/image/异常.png)
 
 ```c

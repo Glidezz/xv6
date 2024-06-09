@@ -23,7 +23,7 @@ echo add-auto-load-safe-path {PATH}/.gdbinit > ~/.gdbinit
 * [lab4-traps](./ans/traps.md)
 * [lab5-cow](./ans/cow.md)
 * [lab6-thread](./ans/thread.md)
-*  ~~[lab7-net]启动xv6失败~~
+* [lab7-net](./ans/net.md)
 * [lab8-lock](./ans/lock.md)
 * [lab9-fs](./ans/fs.md)
 * [lab10-mmap](./ans/mmap.md)

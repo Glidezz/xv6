@@ -5,6 +5,9 @@
 #include "spinlock.h"
 #include "proc.h"
 #include "defs.h"
+#include "sleeplock.h"
+#include "fs.h"
+#include "file.h"
 
 struct spinlock tickslock;
 uint ticks;
@@ -65,6 +68,35 @@ usertrap(void)
     intr_on();
 
     syscall();
+  }else if(r_scause()==13||r_scause()==15){
+    // 读写异常，需要分配内存
+    uint64 addr = r_stval();
+    struct VMA *vma = 0;
+    for (int i = 0; i < VMA_MAX;i++){
+      if (p->vma[i].valid && p->vma[i].addr <= addr && p->vma[i].addr + p->vma[i].len >= addr) {
+        vma = &p->vma[i];
+        break;
+      }
+    }
+
+    if (vma == 0){
+      printf("usertrap(): unexpected scause %p pid=%d\n", r_scause(), p->pid);
+      printf("            sepc=%p stval=%p\n", r_sepc(), r_stval());
+      setkilled(p);
+    }else{
+      uint64 newpage = (uint64)kalloc();
+      memset((void *)newpage, 0, PGSIZE);
+      if (mappages(p->pagetable, addr, PGSIZE, newpage, PTE_U | PTE_V | (vma->prot << 1)) < 0) {
+          printf("mmappage filed\n");
+          setkilled(p);
+      } else {
+          vma->mapcnt += PGSIZE;
+          ilock(vma->f->ip);
+          readi(vma->f->ip, 0, newpage, addr - vma->addr, PGSIZE);
+          iunlock(vma->f->ip);
+      }
+    }
+
   } else if((which_dev = devintr()) != 0){
     // ok
   } else {

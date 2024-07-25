@@ -38,15 +38,3 @@ echo add-auto-load-safe-path {PATH}/.gdbinit > ~/.gdbinit
 * [六周目](QA/六周目.md)
 
 
-
-# 番外篇
-
-发现一位phder写的blog
-
-有幸拜读，感到非常受益匪浅。
-
-1. [XV6操作系统代码阅读心得（一）：启动加载、中断与系统调用](https://hehao98.github.io/posts/2019/03/xv6-1/)
-2. [XV6操作系统代码阅读心得（二）：进程](https://hehao98.github.io/posts/2019/03/xv6-2/)
-3. [XV6操作系统代码阅读心得（三）：锁](https://hehao98.github.io/posts/2019/04/xv6-3/)
-4. [XV6操作系统代码阅读心得（四）：虚拟内存](https://hehao98.github.io/posts/2019/04/xv6-4/)
-5. [XV6操作系统代码阅读心得（五）：文件系统](https://hehao98.github.io/posts/2019/04/xv6-5/)

@@ -44,7 +44,7 @@ riscv64-unknown-elf-objdump -S kernel/kernel > kernel/kernel.asm
 riscv64-unknown-elf-objdump -t kernel/kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > kernel/kernel.sym
 == Test running kalloctest == 
 $ make qemu-gdb
-(70.9s) 
+(120.0s) 
 == Test   kalloctest: test1 == 
   kalloctest: test1: OK 
 == Test   kalloctest: test2 == 
@@ -53,26 +53,19 @@ $ make qemu-gdb
   kalloctest: test3: OK 
 == Test kalloctest: sbrkmuch == 
 $ make qemu-gdb
-kalloctest: sbrkmuch: OK (8.3s) 
+kalloctest: sbrkmuch: OK (15.5s) 
 == Test running bcachetest == 
 $ make qemu-gdb
-(18.2s) 
+(116.0s) 
 == Test   bcachetest: test0 == 
-  bcachetest: test0: FAIL 
-    ...
-         start test1
-         test1 OK
-         start test2
-         test2 OK
-         $ qemu-system-riscv64: terminating on signal 15 from pid 48670 (<unknown process>)
-    MISSING '^test0: OK$'
+  bcachetest: test0: OK 
 == Test   bcachetest: test1 == 
   bcachetest: test1: OK 
 == Test   bcachetest: test2 == 
   bcachetest: test2: OK 
 == Test usertests == 
 $ make qemu-gdb
-usertests: OK (53.6s) 
+usertests: OK (156.6s) 
 == Test time == 
 time: OK 
-Score: 80/90
+Score: 90/90
